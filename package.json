@@ -1,0 +1,20 @@
+{
+  "name": "summarizer",
+  "version": "1.0.0",
+  "main": "main.js",
+  "bin": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "bundle": "pkg . --out-dir ./exec/",
+    "postbundle": "node post-bundle.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cli-progress": "^3.12.0",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.26.1-alpha.3"
+  }
+}

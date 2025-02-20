@@ -1,4 +1,4 @@
-const OPENROUTER_API_KEY = 'YOUR_OPENROUT'
+const OPENROUTER_API_KEY = '';
 const SITE_URL = 'https://naufal.hardiansyah.me';
 const SITE_NAME = 'Naufal hardiansyah';
 const MAX_ATTEMPT = 5;
@@ -42,8 +42,8 @@ client.on('qr', (qr) => {
 client.on('ready', async () => {
   console.log('Client ready, retrieving chats...');
   const chats = await client.getChats();
-  console.log(chats.length, 'chats found.');
-  const filteredChats = chats.filter((chat) => chat.id._serialized !== client.info.wid._serialized);
+  const filteredChats = chats.filter((chat) => chat.id.id !== client.info.wid.id);
+  console.log(filteredChats.length, 'chats found.');
   const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
   progressBar.start(filteredChats.length, 0);
   let compiledSummary = `*WhatsApp Groups Summary*\n\n`;
@@ -87,9 +87,6 @@ client.on('ready', async () => {
         // let lastMessageDate = new Date(fetchedMessages[0].timestamp * 1000);
         if (fetchedMessages.length < limit) fetchMore = false;
         if (hasActivity) chatsWithActivity.add(chat);
-        if (fetchMore) {
-          let test = 1;
-        }
       }
       const conversation = await Promise.all(
         Array.from(todaysMessages).map(async (msg) => {
@@ -205,10 +202,10 @@ client.on('ready', async () => {
     .map((chat) => `• ${chat.name}`);
     
   const awaitingResponseList = Array.from(chatsWithActivity)
-    .filter((chat) => !chat.lastMessage.fromMe)
+    .filter((chat) => !chat.lastMessage?.fromMe)
     .map((chat) => `• ${chat.name}`);
 
-  console.log(chatList.length, 'Today`s chat with activity found.');
+  console.log(chatList.length, 'chats with activity for today found.');
   const summaryMessage = `*WhatsApp Summary for ${todayFormatted}*
     \n${compiledSummary}
     \n*Today's Chats with Activity (${chatList.length}):*\n${chatList.join('\n') || '_None_'}
